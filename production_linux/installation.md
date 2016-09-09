@@ -27,7 +27,7 @@ menu allowing boot device selection.
 Once the system boots into a graphical interface and settles down, click the launcher button in the lower left corner of the screen,
 type "konsole", and press enter.
 
-[Screenshot of opening konsole in live environment]("./opening_konsole_in_live_env.jpg" Opening konsole in live environment)
+![Screenshot of opening konsole in live environment]("./opening_konsole_in_live_env.jpg" Opening konsole in live environment)
 
 ### Verify that a network connection is available
 A network connection is required for the next step and for following steps. At ZPLAB, getting a network connection typically only requires
