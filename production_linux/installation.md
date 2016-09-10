@@ -4,9 +4,17 @@
 available to lab users on a shared basis for experiment data storage and analysis. These systems run the latest Kubuntu LTS release and
 should be installed and configured as specified in this document.
 
-## Kubuntu vs Ubuntu
+### Kubuntu vs Ubuntu
 Kubuntu is an officially supported variant of Ubuntu, differing only in that KDE rather than Unity is installed by default. The difference
 is relatively unimportant, and these instructions should apply just as well to Ubuntu as to Kubuntu.
+
+### A note on installing to a system with an existing RAID array
+If the array or arrays were created following the instructions in the [array protocols and procedures document](./array_protocols_and_procedures.md),
+no additional steps are required in order to protect the array from damage during Linux installation or reinstallation. The disk to be
+used as root should be readily identifiable in the output of the `lsblk` command. If care is taken to partition and format only this
+disk, the installation process will have no impact on the array. A configuration step is required to make the array properly visible
+to users of the newly installed system; this step is detailed in the _Configuring a pre-existing array_ subsection of the _Configuration_
+section.
 
 ## Preparation
 ### Find or make a bootable Kubuntu USB flash memory stick
@@ -65,9 +73,9 @@ installer icon on the desktop.
 
 ![Screenshot of Konsole minimized and mouse cursor on GUI installer icon](./use_gui_installer_instead.png)
 
-The installer default options are fine. Even the correct timezone should be detected. When prompted, create a user with the name and user name
+The default installer options are fine. Even the correct timezone should be detected. When prompted, create a user with the name and user name
 `zplab` and the password `wustlzplab`. Once the installation completes and the system has booted into the new installation, resume following the
-intructions in this document at start of the _Configuring NSS_ section.
+intructions in this document at start of the _Configuration_ section.
 
 ### Install ZFS Utilities in the Live Environment
 Although ZFS is officially supported by Ubuntu and is included in the official Ubuntu package repository, the environment you get
@@ -139,7 +147,7 @@ root@kubuntu:~#
 ```
 
 The `** (appstreamcli:4595): CRITICAL **: Error while moving old database out of the way.` error is expected and should be
-ignored. (apt failed to move the old database because there was no old database, so that's OK.)
+ignored. (apt failed to move the old database because there was no old database. That's fine.)
 
 Next, type `apt-get install zfsutils-linux` and press enter. You should see something like the following:
 
@@ -215,6 +223,10 @@ root@kubuntu:~#
 
 ## Installation
 
-## Configuring NSS
+## Configuration
 
-## Configuring a user Python environment
+### Configuring a pre-existing array
+
+### Configuring NSS
+
+### Configuring a user Python environment
