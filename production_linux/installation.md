@@ -263,7 +263,7 @@ you opened earlier,
 
 On another machine, run `ssh root@10.xxx.xxx.xxx`, replacing the `x` values with the IP address found with `ip addr`.
 
-## Installation
+## Installation and basic configuration
 
 Keep that Konsole window open or SSH connection connected! We're not done running commands quite yet...
 
@@ -521,7 +521,123 @@ I: Configuring resolvconf...
 I: Base system installed successfully.
 ```
 
-## Configuration
+### Set hostname
+
+```
+root@kubuntu:~# echo zpl-scope1 > /mnt/etc/hostname
+```
+
+Run `nano -w /etc/hosts` and add a line such as `127.0.1.1       zpl-scope1.wucon.wustl.edu zpl-scope1`.
+
+### Chroot into the new installation
+
+```
+root@kubuntu:~# mount --rbind /dev  /mnt/dev
+root@kubuntu:~# mount --rbind /proc /mnt/proc
+root@kubuntu:~# mount --rbind /sys  /mnt/sys
+root@kubuntu:~# chroot /mnt /bin/bash --login
+```
+
+### Configure locale
+
+```
+root@kubuntu:/# sed -i 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
+root@kubuntu:/# locale-gen en_US.UTF-8
+Generating locales (this might take a while)...
+Generation complete.
+root@kubuntu:/# echo 'LANG="en_US.UTF-8"' > /etc/default/locale
+```
+
+### Configure timezone
+
+```
+root@kubuntu:/# dpkg-reconfigure tzdata
+```
+
+### Replace /etc/apt/sources.list
+
+Replace /etc/apt/sources.list with [this version](./sources.list). Next, make apt update its package lists.
+
+```
+root@kubuntu:/# apt-get update
+Get:1 http://us.archive.ubuntu.com/ubuntu xenial InRelease [247 kB]
+Get:2 http://security.ubuntu.com/ubuntu xenial-security InRelease [94.5 kB]
+Get:3 http://us.archive.ubuntu.com/ubuntu xenial-updates InRelease [95.7 kB]
+Get:4 http://us.archive.ubuntu.com/ubuntu xenial-backports InRelease [92.2 kB]
+Get:5 http://us.archive.ubuntu.com/ubuntu xenial/main amd64 Packages [1201 kB]
+Get:6 http://us.archive.ubuntu.com/ubuntu xenial/main Translation-en [568 kB]
+Get:7 http://us.archive.ubuntu.com/ubuntu xenial/restricted amd64 Packages [8344 B]
+Get:8 http://us.archive.ubuntu.com/ubuntu xenial/restricted Translation-en [2908 B]
+Get:9 http://us.archive.ubuntu.com/ubuntu xenial/universe amd64 Packages [7532 kB]
+Get:10 http://us.archive.ubuntu.com/ubuntu xenial/universe Translation-en [4354 kB]
+Get:11 http://us.archive.ubuntu.com/ubuntu xenial/multiverse amd64 Packages [144 kB]
+Get:12 http://us.archive.ubuntu.com/ubuntu xenial/multiverse Translation-en [106 kB]
+Get:13 http://us.archive.ubuntu.com/ubuntu xenial-updates/main amd64 Packages [383 kB]
+Get:14 http://us.archive.ubuntu.com/ubuntu xenial-updates/main Translation-en [145 kB]
+Get:15 http://us.archive.ubuntu.com/ubuntu xenial-updates/restricted amd64 Packages [64 B]
+Get:16 http://us.archive.ubuntu.com/ubuntu xenial-updates/restricted Translation-en [64 B]
+Get:17 http://us.archive.ubuntu.com/ubuntu xenial-updates/universe amd64 Packages [324 kB]
+Get:18 http://security.ubuntu.com/ubuntu xenial-security/main amd64 Packages [138 kB]
+Get:19 http://us.archive.ubuntu.com/ubuntu xenial-updates/universe Translation-en [111 kB]
+Get:20 http://us.archive.ubuntu.com/ubuntu xenial-updates/multiverse amd64 Packages [5488 B]
+Get:21 http://us.archive.ubuntu.com/ubuntu xenial-updates/multiverse Translation-en [2428 B]
+Get:22 http://us.archive.ubuntu.com/ubuntu xenial-backports/main amd64 Packages [1540 B]
+Get:23 http://us.archive.ubuntu.com/ubuntu xenial-backports/main Translation-en [1484 B]
+Get:24 http://us.archive.ubuntu.com/ubuntu xenial-backports/restricted amd64 Packages [64 B]
+Get:25 http://us.archive.ubuntu.com/ubuntu xenial-backports/restricted Translation-en [64 B]
+Get:26 http://us.archive.ubuntu.com/ubuntu xenial-backports/universe amd64 Packages [1000 B]
+Get:27 http://us.archive.ubuntu.com/ubuntu xenial-backports/universe Translation-en [584 B]
+Get:28 http://us.archive.ubuntu.com/ubuntu xenial-backports/multiverse amd64 Packages [64 B]
+Get:29 http://us.archive.ubuntu.com/ubuntu xenial-backports/multiverse Translation-en [64 B]
+Get:30 http://security.ubuntu.com/ubuntu xenial-security/main Translation-en [57.0 kB]
+Get:31 http://security.ubuntu.com/ubuntu xenial-security/restricted amd64 Packages [64 B]
+Get:32 http://security.ubuntu.com/ubuntu xenial-security/restricted Translation-en [64 B]
+Get:33 http://security.ubuntu.com/ubuntu xenial-security/universe amd64 Packages [41.5 kB]
+Get:34 http://security.ubuntu.com/ubuntu xenial-security/universe Translation-en [25.1 kB]
+Get:35 http://security.ubuntu.com/ubuntu xenial-security/multiverse amd64 Packages [1176 B]
+Get:36 http://security.ubuntu.com/ubuntu xenial-security/multiverse Translation-en [628 B]
+Fetched 15.7 MB in 2s (6956 kB/s)
+Reading package lists... Done
+```
+
+### Install Kubuntu stuff and mdadm
+
+```
+root@kubuntu:/# apt-get install kubuntu-full kubuntu-restricted-addons kubuntu-restricted-extras mdadm --yes
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+The following additional packages will be installed:
+  accountsservice accountwizard acl adwaita-icon-theme akonadi-backend-mysql akonadi-server akregator alsa-utils amarok amarok-common amarok-utils apport apport-kde apport-symptoms appstream aptdaemon
+  apturl-common apturl-kde ark aspell aspell-en
+
+...
+```
+
+### Install GRUB, make system groups
+
+Run:
+
+```
+apt-get install --yes --no-install-recommends linux-image-generic
+apt-get install --yes zfs-initramfs
+ln -s /dev/sdd1 /dev/ata-Samsung_SSD_850_PRO_256GB_S251NX0H414185H-part1  # replace the ata-Samsung... part with your root device
+apt-get install --yes grub-pc
+addgroup --system lpadmin
+addgroup --system sambashare
+update-initramfs -c -k all
+```
+
+### Exit chroot, unmount binds, export root_pool, and reboot
+
+```
+root@kubuntu:/dev# exit
+root@kubuntu:/dev# mount | grep -v zfs | tac | awk '/\/mnt/ {print $3}' | xargs -i{} umount -lf {}
+root@kubuntu:/dev# zpool export root_pool
+root@kubuntu:/dev# reboot
+```
+
+## Additional Configuration
 
 ### Configuring a pre-existing array
 
