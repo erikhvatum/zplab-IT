@@ -626,6 +626,7 @@ apt-get install --yes grub-pc
 addgroup --system lpadmin
 addgroup --system sambashare
 update-initramfs -c -k all
+update-grub
 ```
 
 ### Exit chroot, unmount binds, export root_pool, and reboot
