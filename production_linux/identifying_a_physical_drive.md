@@ -19,6 +19,6 @@ With this command running, let's examine our indicators:
 
 ![Picture of LEDs with obvious gap](./missing_disk.jpg)
 
-The red array points to a drive that would be active, had it not failed.
+The red arrow points to a drive that would be active, had it not failed.
 
 ### By serial number
