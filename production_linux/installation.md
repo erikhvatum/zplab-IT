@@ -68,7 +68,7 @@ Minimize the Konsole window you opened previous and click the GUI installer icon
 ![Screenshot of Konsole minimized and mouse cursor on GUI installer icon](./run_gui_installer.png)
 
 The default installer options are fine. Even the correct timezone should be detected. When prompted, create a user with the name and user name
-`zplab` and the password `wustlzplab`.
+`zplab` and the standard password (ask a lab member or email Zach for this).
 
 ### Reboot when prompted
 
