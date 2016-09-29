@@ -72,9 +72,15 @@ The default installer options are fine. Even the correct timezone should be dete
 
 ### Reboot when prompted
 
-After the installer completes, click reboot when prompted, and then remove the USB flash memory stick when prompted. The system should boot 
+After the installer completes, click reboot when prompted, and then remove the USB flash memory stick when prompted. The system should boot into the 
+new Kubuntu installation. If it does not and you have followed the instructions in the _Ensure that the root drive has the highest BIOS boot drive 
+priority_ section, something more subtle and potentially very arcane is at play, and it's advisable to call IT unless you have time for an excursion 
+into the nitty-gritty of grub, EFI, MBRs, etc.
 
 ## Configuration
+
+Reconnect the USB flash memory stick and reboot. Ensure that the system boots from the memory stick, as described in the _Boot the Kubuntu USB flash 
+memory stick_ section.
 
 ### ZFS?
 
