@@ -97,7 +97,26 @@ into the nitty-gritty of grub, EFI, MBRs, etc.
 ## Configuration
 
 Reconnect the USB flash memory stick and reboot. Ensure that the system boots from the memory stick, as described in the _Boot the Kubuntu USB flash 
-memory stick_ section.
+memory stick_ section. Next, open a terminal window and run
+```wget https://raw.githubusercontent.com/erikhvatum/zplab-IT/master/production_linux/configure_kubuntu.py``` ([direct link](./configure_kubuntu.py))
+followed by ```python3 configure_kubuntu.py```:
+
+```
+> wget https://raw.githubusercontent.com/erikhvatum/zplab-IT/master/production_linux/configure_kubuntu.py
+--2016-10-02 00:27:45--  https://raw.githubusercontent.com/erikhvatum/zplab-IT/master/production_linux/configure_kubuntu.py
+Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 151.101.44.133
+Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|151.101.44.133|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 45 [text/plain]
+Saving to: ‘configure_kubuntu.py’
+
+configure_kubuntu.py 100%[===================================================================>] 450 --.-KB/s in 0s 
+
+2016-10-02 00:27:45 (4.60 MB/s) - ‘configure_kubuntu.py’ saved [450/450]
+> python3 configure_kubuntu.py
+```
+
+At this point, you will be prompted to select ZFS or ext4 as your root filesystem format.
 
 ### ZFS?
 
