@@ -67,8 +67,25 @@ Minimize the Konsole window you opened previous and click the GUI installer icon
 
 ![Screenshot of Konsole minimized and mouse cursor on GUI installer icon](./run_gui_installer.png)
 
-The default installer options are fine. Even the correct timezone should be detected. When prompted, create a user with the name and user name
-`zplab` and the standard password (ask a lab member or email Zach for this).
+Click continue at the language selection screen, and then enable installation with updates and third-party software. Click continue again.
+
+![Screenshot of update and 3rd party toggles](./enable_updates_and_3rd_party_software.png)
+
+Select the drive you wish to use as root as the installation target and click install.
+
+![Screenshot of drive selection](./select_correct_disk.png)
+
+From here, the default installer options are fine. Even the correct timezone should be detected. When prompted, create a user with the name and 
+user name `zplab` and the standard password (ask a lab member or email Zach for this). 
+
+### If "Guided - use entire disk" fails...
+
+The installer attempts to make a swap partition equal to the size of system main memory. If the machine onto which you are installing Kubuntu has 
+RAM capacity approaching or exceeding root drive size, "Guided - use entire disk" mode will fail, and you must use the installer GUI to specify 
+partition layout manually. In this case, make an ext4 volume with mount point / that is 8000MB smaller than the default value (the default is the 
+entire disk), and make a swap partition filling the remainder. 
+
+![Screenshot of manually partition table screation](./manually_created_partition_table.png)
 
 ### Reboot when prompted
 
@@ -84,9 +101,9 @@ memory stick_ section.
 
 ### ZFS?
 
-Configuring the installation to use a ZFS root recommended for multi-user production Linux systems. ZFS provides good options for rapidly
-escaping bad situations, and it has saved our bacon a number of times. However, a special-purpose system that is fast to configure and rarely
-changed wouldn't necessarily benefit from ZFS, and any system with less than 16GiB of RAM is unlikely to receive any benefit unless a specific need
+Configuring the installation to use a ZFS root is recommended for multi-user production Linux systems. ZFS provides good options for rapidly 
+escaping bad situations, and it has saved our bacon a number of times. However, a special-purpose system that is fast to configure and rarely 
+changed wouldn't necessarily benefit from ZFS, and any system with less than 16GiB of RAM is unlikely to receive any benefit unless a specific need 
 exists.
 
 * Example of a system that **should have a ZFS root**: a custom-built computer controlling a Leica microscope situated in an incubator, hosting
