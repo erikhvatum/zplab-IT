@@ -46,38 +46,38 @@ type "konsole", and press enter.
 ### Identify the drive that will contain the root filesystem
 
 In the terminal window, run ```lsblk -o name,size,fstype,mountpoint,model,serial```. On a production system with a RAID array, you will see
-something like this (drive serial numbers replaced with * characters):
+something like this (drive serial numbers replaced with █ characters):
 
 ```
 > lsblk -o name,size,fstype,mountpoint,model,serial
 NAME     SIZE FSTYPE     MOUNTPOINT MODEL            SERIAL
-sda    232.9G                       Samsung SSD 840  S**************
+sda    232.9G                       Samsung SSD 840  S██████████████
 ├─sda1 192.9G zfs_member
 ├─sda2    32G
 └─sda3     8G swap
-sdb      3.7T                       WDC WD40EZRX-00S WD-************
+sdb      3.7T                       WDC WD40EZRX-00S WD-████████████
 └─sdb1   3.7T
-sdc      3.7T                       WDC WD40EZRX-00S WD-************
+sdc      3.7T                       WDC WD40EZRX-00S WD-████████████
 └─sdc1   3.7T
-sdd      3.7T                       WDC WD40EZRX-00S WD-************
+sdd      3.7T                       WDC WD40EZRX-00S WD-████████████
 └─sdd1   3.7T
-sde      3.7T                       WDC WD40EZRX-00S WD-************
+sde      3.7T                       WDC WD40EZRX-00S WD-████████████
 └─sde1   3.7T
-sdf      3.7T                       WDC WD40EZRX-00S WD-************
+sdf      3.7T                       WDC WD40EZRX-00S WD-████████████
 └─sdf1   3.7T
-sdg      3.7T                       WDC WD4000FDYZ-2 WD-************
+sdg      3.7T                       WDC WD4000FDYZ-2 WD-████████████
 └─sdg1   3.7T
-sdh      3.7T                       WDC WD4000FDYZ-2 WD-************
+sdh      3.7T                       WDC WD4000FDYZ-2 WD-████████████
 └─sdh1   3.7T
-sdi      3.7T                       WDC WD40EZRX-00S WD-************
+sdi      3.7T                       WDC WD40EZRX-00S WD-████████████
 └─sdi1   3.7T
-sdj      3.7T                       WDC WD40EZRX-00S WD-************
+sdj      3.7T                       WDC WD40EZRX-00S WD-████████████
 └─sdj1   3.7T
-sdk      3.7T                       WDC WD40EZRX-00S WD-************
+sdk      3.7T                       WDC WD40EZRX-00S WD-████████████
 └─sdk1   3.7T
-sdl      3.7T                       WDC WD40EZRX-00S WD-************
+sdl      3.7T                       WDC WD40EZRX-00S WD-████████████
 └─sdl1   3.7T
-sdo      3.7T                       WDC WD40EZRX-00S WD-************
+sdo      3.7T                       WDC WD40EZRX-00S WD-████████████
 └─sdo1   3.7T
 sr0     1.4G iso9660           /cdrom     CD-ROM
 loop0   1.4G squashfs          /rofs
