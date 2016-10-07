@@ -20,15 +20,6 @@ section.
 
 ## Installation
 
-### Ensure that the root drive has the highest BIOS boot drive priority
-
-Although plugging the root drive into motherboard SATA controller port 0 helps to avoid this problem, it may still happen that a RAID
-disk is selected as the most preferred boot drive. If, during installation, some drive other than the root is first in the BIOS boot
-order, the system becomes dependant on that drive's presence in order to boot. The configuration script you are instructed to run
-later in this document will note this condition.
-
-TODO: phoenix bios drive order screenshot
-
 ### Find or make a bootable Kubuntu USB flash memory stick
 
 If there is not already a USB flash memory stick available with the latest Kubuntu LTS release,
@@ -51,6 +42,62 @@ Once the system boots into a graphical interface and settles down, click the lau
 type "konsole", and press enter.
 
 ![Screenshot of opening konsole in live environment](./opening_konsole_in_live_env.png)
+
+### Identify the drive that will contain the root filesystem
+
+In the terminal window, run ```lsblk -o name,size,fstype,mountpoint,model,serial```. On a production system with a RAID array, you will see
+something like this (drive serial numbers replaced with * characters):
+
+```
+> lsblk -o name,size,fstype,mountpoint,model,serial
+NAME     SIZE FSTYPE     MOUNTPOINT MODEL            SERIAL
+sda    232.9G                       Samsung SSD 840  S**************
+├─sda1 192.9G zfs_member
+├─sda2    32G
+└─sda3     8G swap       [SWAP]
+sdb      3.7T                       WDC WD40EZRX-00S WD-************
+└─sdb1   3.7T
+sdc      3.7T                       WDC WD40EZRX-00S WD-************
+└─sdc1   3.7T
+sdd      3.7T                       WDC WD40EZRX-00S WD-************
+└─sdd1   3.7T
+sde      3.7T                       WDC WD40EZRX-00S WD-************
+└─sde1   3.7T
+sdf      3.7T                       WDC WD40EZRX-00S WD-************
+└─sdf1   3.7T
+sdg      3.7T                       WDC WD4000FDYZ-2 WD-************
+└─sdg1   3.7T
+sdh      3.7T                       WDC WD4000FDYZ-2 WD-************
+└─sdh1   3.7T
+sdi      3.7T                       WDC WD40EZRX-00S WD-************
+└─sdi1   3.7T
+sdj      3.7T                       WDC WD40EZRX-00S WD-************
+└─sdj1   3.7T
+sdk      3.7T                       WDC WD40EZRX-00S WD-************
+└─sdk1   3.7T
+sdl      3.7T                       WDC WD40EZRX-00S WD-************
+└─sdl1   3.7T
+sdo      3.7T                       WDC WD40EZRX-00S WD-************
+└─sdo1   3.7T
+sr0     1.4G iso9660           /cdrom     CD-ROM
+loop0   1.4G squashfs          /rofs
+```
+
+In the above example output, we see that _sda_ is the only SSD.
+
+If you are not installing to an Apple computer, note the model name of the disk ("Samsung SSD 840" in the example output). This is needed for the
+next step.
+
+### Ensure that the root drive has the highest BIOS boot drive priority
+
+_Skip this step if you are installing to an Apple computer_
+
+Although plugging the root drive into motherboard SATA controller port 0 helps to avoid this problem, it may still happen that a RAID
+disk is selected as the most preferred boot drive. If, during installation, some drive other than the root is first in the BIOS boot
+order, the system becomes dependant on that drive's presence in order to boot. The configuration script you are instructed to run
+later in this document will note this condition.
+
+TODO: phoenix bios drive order screenshot
 
 ### Verify that a network connection is available
 
@@ -75,28 +122,28 @@ Select the drive you wish to use as root as the installation target and click in
 
 ![Screenshot of drive selection](./select_correct_disk.png)
 
-From here, the default installer options are fine. Even the correct timezone should be detected. When prompted, create a user with the name and 
-user name `zplab` and the standard password (ask a lab member or email Zach for this). 
+From here, the default installer options are fine. Even the correct timezone should be detected. When prompted, create a user with the name and
+user name `zplab` and the standard password (ask a lab member or email Zach for this).
 
 ### If "Guided - use entire disk" fails...
 
-The installer attempts to make a swap partition equal to the size of system main memory. If the machine onto which you are installing Kubuntu has 
-RAM capacity approaching or exceeding root drive size, "Guided - use entire disk" mode will fail, and you must use the installer GUI to specify 
-partition layout manually. In this case, make an ext4 volume with mount point / that is 8000MB smaller than the default value (the default is the 
-entire disk), and make a swap partition filling the remainder. 
+The installer attempts to make a swap partition equal to the size of system main memory. If the machine onto which you are installing Kubuntu has
+RAM capacity approaching or exceeding root drive size, "Guided - use entire disk" mode will fail, and you must use the installer GUI to specify
+partition layout manually. In this case, make an ext4 volume with mount point / that is 8000MB smaller than the default value (the default is the
+entire disk), and make a swap partition filling the remainder.
 
 ![Screenshot of manually partition table screation](./manually_created_partition_table.png)
 
 ### Reboot when prompted
 
-After the installer completes, click reboot when prompted, and then remove the USB flash memory stick when prompted. The system should boot into the 
-new Kubuntu installation. If it does not and you have followed the instructions in the _Ensure that the root drive has the highest BIOS boot drive 
-priority_ section, something more subtle and potentially very arcane is at play, and it's advisable to call IT unless you have time for an excursion 
+After the installer completes, click reboot when prompted, and then remove the USB flash memory stick when prompted. The system should boot into the
+new Kubuntu installation. If it does not and you have followed the instructions in the _Ensure that the root drive has the highest BIOS boot drive
+priority_ section, something more subtle and potentially very arcane is at play, and it's advisable to call IT unless you have time for an excursion
 into the nitty-gritty of grub, EFI, MBRs, etc.
 
 ## Configuration
 
-Reconnect the USB flash memory stick and reboot. Ensure that the system boots from the memory stick, as described in the _Boot the Kubuntu USB flash 
+Reconnect the USB flash memory stick and reboot. Ensure that the system boots from the memory stick, as described in the _Boot the Kubuntu USB flash
 memory stick_ section. Next, open a terminal window and run
 ```wget https://raw.githubusercontent.com/erikhvatum/zplab-IT/master/production_linux/configure_kubuntu.py``` ([direct link](./configure_kubuntu.py))
 followed by ```python3 configure_kubuntu.py```:
@@ -110,7 +157,7 @@ HTTP request sent, awaiting response... 200 OK
 Length: 45 [text/plain]
 Saving to: ‘configure_kubuntu.py’
 
-configure_kubuntu.py 100%[===================================================================>] 450 --.-KB/s in 0s 
+configure_kubuntu.py 100%[===================================================================>] 450 --.-KB/s in 0s
 
 2016-10-02 00:27:45 (4.60 MB/s) - ‘configure_kubuntu.py’ saved [450/450]
 > python3 configure_kubuntu.py
@@ -120,9 +167,9 @@ At this point, you will be prompted to select ZFS or ext4 as your root filesyste
 
 ### ZFS?
 
-Configuring the installation to use a ZFS root is recommended for multi-user production Linux systems. ZFS provides good options for rapidly 
-escaping bad situations, and it has saved our bacon a number of times. However, a special-purpose system that is fast to configure and rarely 
-changed wouldn't necessarily benefit from ZFS, and any system with less than 16GiB of RAM is unlikely to receive any benefit unless a specific need 
+Configuring the installation to use a ZFS root is recommended for multi-user production Linux systems. ZFS provides good options for rapidly
+escaping bad situations, and it has saved our bacon a number of times. However, a special-purpose system that is fast to configure and rarely
+changed wouldn't necessarily benefit from ZFS, and any system with less than 16GiB of RAM is unlikely to receive any benefit unless a specific need
 exists.
 
 * Example of a system that **should have a ZFS root**: a custom-built computer controlling a Leica microscope situated in an incubator, hosting
@@ -139,4 +186,4 @@ flavor. However, any time spent using a ZFS root will probably be wasted unless 
 snapshots of million-file source trees as you track down a bug in Chromium (snapshot copy-on-write is a big time saver in this scenario - but this
 scenario is uncommon at ZPLAB).
 
-## 
+##
