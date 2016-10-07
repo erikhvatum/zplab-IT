@@ -96,7 +96,7 @@ _Skip this step if you are installing to an Apple computer_
 Although plugging the root drive into motherboard SATA controller port 0 helps to avoid this problem, it may still happen that a RAID
 disk is selected as the most preferred boot drive. If, during installation, some drive other than the root is first in the BIOS boot
 order, the system becomes dependant on that drive's presence in order to boot. The configuration script you are instructed to run
-later in this document will note this condition.
+later in this document will detect this misconfiguration and output a warning if it is present.
 
 TODO: phoenix bios drive order screenshot
 
