@@ -102,10 +102,9 @@ TODO: phoenix bios drive order screenshot
 
 ### Verify that a network connection is available
 
-A network connection is required for the next step and for following steps. At ZPLAB, getting a
-network connection typically only requires plugging in a network cable connected to a working bench or wall port. Not all bench and wall ports work.
-In particular, open ports in obscure locations tend not to be "provisioned", a state that can mean many different things, but one that is always
-resolved by sending and email to Kyle.
+A network connection is required for the next step and for following steps. At ZPLAB, getting a network connection typically only requires plugging
+in a network cable connected to a working bench or wall port. Not all bench and wall ports work. In particular, open ports in obscure locations tend
+not to be "provisioned", a state that can mean many different things, but one that is always resolved by sending and email to Kyle.
 
 Connectivity can be verified by running `ping www.google.com` in the terminal window opened in the previous step.
 
@@ -130,8 +129,8 @@ user name `zplab` and the standard password (ask a lab member or email Zach for 
 
 The installer attempts to make a swap partition equal to the size of system main memory. If the machine onto which you are installing Kubuntu has
 RAM capacity approaching or exceeding root drive size, "Guided - use entire disk" mode will fail, and you must use the installer GUI to specify
-partition layout manually. In this case, make an ext4 volume with mount point / that is 8000MB smaller than the default value (the default is the
-entire disk), and make a swap partition filling the remainder.
+partition layout manually. In this case, make an ext4 volume with mount point "/" (without quotes) that is 8000MB smaller than the default value
+(the default is the entire disk), and make a swap partition filling the remainder.
 
 ![Screenshot of manually partition table screation](./manually_created_partition_table.png)
 
@@ -146,8 +145,8 @@ into the nitty-gritty of grub, EFI, MBRs, etc.
 
 Reconnect the USB flash memory stick and reboot. Ensure that the system boots from the memory stick, as described in the _Boot the Kubuntu USB flash
 memory stick_ section. Next, open a terminal window and run
-```wget https://raw.githubusercontent.com/erikhvatum/zplab-IT/master/production_linux/configure_kubuntu.py``` ([direct link](./configure_kubuntu.py))
-followed by ```python3 configure_kubuntu.py```:
+`wget https://raw.githubusercontent.com/erikhvatum/zplab-IT/master/production_linux/configure_kubuntu.py` ([direct link](./configure_kubuntu.py))
+followed by `python3 configure_kubuntu.py`:
 
 ```
 > wget https://raw.githubusercontent.com/erikhvatum/zplab-IT/master/production_linux/configure_kubuntu.py
