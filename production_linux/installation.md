@@ -54,7 +54,7 @@ NAME     SIZE FSTYPE     MOUNTPOINT MODEL            SERIAL
 sda    232.9G                       Samsung SSD 840  S**************
 ├─sda1 192.9G zfs_member
 ├─sda2    32G
-└─sda3     8G swap       [SWAP]
+└─sda3     8G swap
 sdb      3.7T                       WDC WD40EZRX-00S WD-************
 └─sdb1   3.7T
 sdc      3.7T                       WDC WD40EZRX-00S WD-************
@@ -83,7 +83,8 @@ sr0     1.4G iso9660           /cdrom     CD-ROM
 loop0   1.4G squashfs          /rofs
 ```
 
-In the above example output, we see that _sda_ is the only SSD.
+In the above example output, we see that _sda_ is the only SSD. This is pretty unambiguous - if the system has only one SSD, then that SSD is
+typically going to contain the root filesystem and bootloader.
 
 If you are not installing to an Apple computer, note the model name of the disk ("Samsung SSD 840" in the example output). This is needed for the
 next step.
